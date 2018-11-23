@@ -7,3 +7,4 @@
 .idea/
 _dev/
 tmp/
+/vendor/

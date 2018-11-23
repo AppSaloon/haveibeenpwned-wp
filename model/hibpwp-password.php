@@ -2,6 +2,6 @@
 
 namespace hibpwp\model;
 
-class Hibpwp_User {
+class Hibpwp_Password {
 
 }

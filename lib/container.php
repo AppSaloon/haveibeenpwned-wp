@@ -71,12 +71,12 @@ Final class Container implements Container_Interface {
 		$this->container->set( 'init_config', DI\object( 'hibpwp\config\Init_Config' ) );
 
 		/**
-		 * Navision adapter
+		 * Hibpwp adapter
 		 */
 		$this->container->set( 'Hibpwp_Adapter_Interface', DI\object( 'hibpwp\controller\adapter\Hibpwp_Adapter' ) );
 
 		/**
-		 * Navision controller
+		 * Hibpwp controller
 		 */
 		$this->container->set( 'Hibpwp_Controller_Interface',
 			DI\object( 'hibpwp\controller\Hibpwp_Controller' )
@@ -87,7 +87,7 @@ Final class Container implements Container_Interface {
 		);
 
 		/**
-		 * Navision cron controller
+		 * Hibpwp cron controller
 		 */
 		$this->container->set( 'Hibpwp_Cron_Controller_Interface',
 			DI\object( 'hibpwp\controller\cron\Hibpwp_Cron_Controller' )
