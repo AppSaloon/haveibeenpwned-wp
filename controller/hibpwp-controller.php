@@ -42,6 +42,11 @@ class Hibpwp_Controller implements Hibpwp_Controller_Interface {
 
     }
 
+    /**
+     * Gets triggered when a user updates its password
+     * 
+     * @param $errors
+     */
     public function start_check($errors) {
 
 	    if( isset( $_POST['pass1']) && !empty($_POST['pass1'] ) ) {
@@ -58,7 +63,13 @@ class Hibpwp_Controller implements Hibpwp_Controller_Interface {
 
     }
 
-    public function get_hibp_count($password) {
+    /**
+     * Het the count of times the choosen password was exposed
+     *
+     * @param $password
+     * @return int
+     */
+    public function get_hibp_count(string $password) {
         $endpoint = 'https://api.pwnedpasswords.com/range/';
         $hash = sha1($password);
         $prefix = substr($hash, 0, 5);
