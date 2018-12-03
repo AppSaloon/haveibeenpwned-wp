@@ -8,6 +8,7 @@ use hibpwp\controller\log\Log_Controller_Interface;
 use hibpwp\lib\Container;
 use hibpwp\lib\Helper;
 use hibpwp\model\Hibpwp_User;
+use hibpwp\model\Hibpwp_Settings;
 
 class Hibpwp_Controller implements Hibpwp_Controller_Interface {
 
@@ -35,7 +36,7 @@ class Hibpwp_Controller implements Hibpwp_Controller_Interface {
 	public function __construct( Hibpwp_Adapter_Interface $hibpwp_adapter, Log_Controller_Interface $log ) {
 		$this->hibpwp_adapter = $hibpwp_adapter;
 		$this->log              = $log;
-
+		$this->settings = new Hibpwp_Settings();
 
         add_action('validate_password_reset', array( $this, 'start_check' ) );
         add_action('user_profile_update_errors', array( $this, 'start_check' ) );
@@ -44,12 +45,14 @@ class Hibpwp_Controller implements Hibpwp_Controller_Interface {
 
     /**
      * Gets triggered when a user updates its password
-     * 
+     *
      * @param $errors
      */
     public function start_check($errors) {
 
-	    if( isset( $_POST['pass1']) && !empty($_POST['pass1'] ) ) {
+        $basic_block = $this->settings->get_value( 'basic_block' );
+
+	    if( ( isset( $_POST['pass1']) && !empty($_POST['pass1'] ) ) && $basic_block ) {
 	        $new_pass = $_POST['pass1'];
 	        $pwned_count = $this->get_hibp_count($new_pass);
 

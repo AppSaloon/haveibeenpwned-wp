@@ -5,6 +5,7 @@ namespace hibpwp\config;
 use hibpwp\controller\cron\Hibpwp_Cron_Controller;
 use hibpwp\controller\log\Database_Log_Controller;
 use hibpwp\lib\Container;
+use hibpwp\model\Hibpwp_Settings;
 
 class Init_Config {
 
@@ -12,10 +13,6 @@ class Init_Config {
 	 * @var \DI\container
 	 */
 	private $container;
-
-	protected $option_name = 'hibpwp_settings';
-
-	private $setting_values;
 
 	/**
 	 * Init_Config constructor.
@@ -32,7 +29,7 @@ class Init_Config {
 
 		$this->write_log_to_database();
 
-        $this->setting_values = get_option( $this->option_name );
+        $this->setting_values = new Hibpwp_Settings();
 
 
         add_action( 'admin_menu', array( $this, 'admin_submenu' ) );
@@ -111,16 +108,9 @@ class Init_Config {
     }
 
     public function get_checked($checkbox_name) {
-        $current_values = get_option('hibpwp_settings');
-        $checked = '';
+        $current_value = $this->setting_values->get_value($checkbox_name);
 
-        if( is_array($current_values) ) {
-            if( key_exists($checkbox_name, $current_values) ) {
-                $checked = checked( $current_values[$checkbox_name], 1, false );
-            }
-        }
-
-        return $checked;
+        return checked( $current_value, 1, false );
     }
 
 	/**
